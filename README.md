@@ -31,6 +31,18 @@ The website displays my **name** and **team name** using clean design and basic 
 ## 📂 Project Structure
 
 ---
+```
+Presentation-web
+├── index.html  # Main HTML file
+├── style.css # Styling and layout
+├── script.js  # JavaScript logic
+├── logo.png # Logo or profile image
+├── hero-bg-pattern.svg # Background pattern
+└── README.md
+
+```
+---
+---
 
 ## ▶️ How to Run
 1. Download or clone the repository  

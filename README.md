@@ -29,3 +29,26 @@ The website displays my **name** and **team name** using clean design and basic 
 ---
 
 ## 📂 Project Structure
+
+---
+
+## ▶️ How to Run
+1. Download or clone the repository  
+2. Open `index.html` in any modern web browser  
+
+_No installation or setup required._
+
+---
+
+## 👤 Author
+**Srinivas P**
+
+---
+
+## 👥 Team
+**Tech Nexus**
+
+---
+
+## 📜 License
+This project is created for educational and presentation purposes.

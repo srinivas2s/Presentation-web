@@ -1,0 +1,309 @@
+:root {
+    --bg-color: #0ae;
+    --primary-color: #00f2ff;
+    --secondary-color: #7000ff;
+    --text-color: #ffffff;
+    --bg-dark: #050510;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-dark);
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(112, 0, 255, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 242, 255, 0.15) 0%, transparent 40%);
+    color: var(--text-color);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('hero-bg-pattern.svg');
+    /* Optional pattern if available, otherwise just gradient */
+    opacity: 0.1;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.container {
+    text-align: center;
+    z-index: 1;
+    padding: 2rem;
+    max-width: 900px;
+    width: 90%;
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    animation: container-entry 1s ease-out forwards;
+    max-height: 90vh;
+    overflow-y: auto;
+    /* Custom Scrollbar for container */
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--bg-dark);
+}
+
+.container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 242, 255, 0.3);
+    border-radius: 20px;
+}
+
+
+.logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.5));
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05) rotate(2deg);
+}
+
+h1.team-name {
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin: 0;
+    background: linear-gradient(90deg, #fff, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Fix lint error */
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+    margin-bottom: 0.5rem;
+}
+
+.problem-statement {
+    margin-bottom: 2rem;
+    opacity: 0;
+    /* Animated in */
+}
+
+.problem-statement h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #ccc;
+    margin-bottom: 0.2rem;
+}
+
+.problem-statement p {
+    font-size: 1rem;
+    color: var(--primary-color);
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* Team Section Styles */
+.team-section {
+    margin-bottom: 2.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.team-section h3 {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: inline-block;
+    padding-bottom: 0.5rem;
+}
+
+.team-grid {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.team-member {
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+}
+
+.team-member .role {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.team-member .name {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #fff;
+    margin-bottom: 0.2rem;
+}
+
+.cta-button {
+    position: relative;
+    display: inline-block;
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--bg-dark);
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+    opacity: 0;
+    /* Animated in */
+    animation: fade-in-up 1s ease-out 0.8s forwards;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px rgba(0, 242, 255, 0.6);
+}
+
+.cta-button .shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transition: 0.5s;
+}
+
+.cta-button:hover .shine {
+    left: 100%;
+}
+
+footer {
+    margin-top: 3rem;
+    font-size: 0.8rem;
+    color: #666;
+    animation: fade-in 2s ease-out 1.5s forwards;
+    opacity: 0;
+}
+
+/* Animations */
+
+@keyframes container-entry {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fade-in 1.5s ease-out forwards;
+}
+
+.slide-up {
+    animation: fade-in-up 1s ease-out 0.5s forwards;
+}
+
+.fade-in-delayed {
+    opacity: 0;
+    animation: fade-in-up 1s ease-out 0.7s forwards;
+}
+
+.tracking-in-expand {
+    animation: tracking-in-expand 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+}
+
+@keyframes tracking-in-expand {
+    0% {
+        letter-spacing: -0.5em;
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 0.6;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    h1.team-name {
+        font-size: 2.5rem;
+    }
+
+    .problem-statement h2 {
+        font-size: 1.2rem;
+    }
+
+    .container {
+        padding: 1rem;
+        margin: 1rem;
+        width: auto;
+    }
+
+    .team-grid {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}

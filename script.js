@@ -12,20 +12,26 @@ document.addEventListener('DOMContentLoaded', () => {
         particle.style.borderRadius = '50%';
         particle.style.left = Math.random() * 100 + 'vw';
         particle.style.top = Math.random() * 100 + 'vh';
-        particle.style.animation = `float ${Math.random() * 10 + 5}s linear infinite`;
-        particle.style.opacity = Math.random();
-        
+        particle.style.animation = `float ${Math.random() * 10 + 15}s linear infinite`;
+        particle.style.opacity = Math.random() * 0.5 + 0.2;
+        particle.style.pointerEvents = 'none';
+        particle.style.zIndex = '-1';
+
         body.appendChild(particle);
     }
 
     // Add float animation keyframes dynamically
-    const styleSheet = document.createElement("style");
-    styleSheet.innerText = `
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-    `;
-    document.head.appendChild(styleSheet);
+    if (!document.getElementById('particle-styles')) {
+        const styleSheet = document.createElement("style");
+        styleSheet.id = 'particle-styles';
+        styleSheet.innerText = `
+            @keyframes float {
+                0% { transform: translateY(0) translateX(0); opacity: 0; }
+                10% { opacity: 0.8; }
+                90% { opacity: 0.8; }
+                100% { transform: translateY(-110vh) translateX(0); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    }
 });

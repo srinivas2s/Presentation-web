@@ -1,0 +1,15 @@
+{
+    "name": "tech.nexus",
+    "version": "1.0.0",
+    "description": "Presentation website",
+    "main": "index.html",
+    "scripts": {
+        "dev": "npx serve ."
+    },
+    "keywords": [],
+    "author": "Tech Nexus Team",
+    "license": "ISC",
+    "dependencies": {
+        "serve": "^14.2.4"
+    }
+}

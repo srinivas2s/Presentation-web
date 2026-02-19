@@ -4,8 +4,7 @@
 <div align="center">
   <img src="logo.png" alt="Tech Nexus Logo" width="200"/>
   <br>
-  <h3>Promoting Local Artisans and Hidden Gems</h3>
-  <p>A modern, decentralized approach to tourism in the heritage city of Mysore.</p>
+  <h3>Code. Create. Innovate.</h3>
 
   ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
   ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)

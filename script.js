@@ -1,38 +1,84 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Add particle effect to background
-    const body = document.body;
-    const numberOfParticles = 50;
-
-    for (let i = 0; i < numberOfParticles; i++) {
-        const particle = document.createElement('div');
-        particle.style.position = 'absolute';
-        particle.style.width = '2px';
-        particle.style.height = '2px';
-        const colors = ['rgba(212, 175, 55, 0.4)', 'rgba(255, 215, 0, 0.3)', 'rgba(153, 101, 21, 0.2)'];
-        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-        particle.style.borderRadius = '50%';
-        particle.style.left = Math.random() * 100 + 'vw';
-        particle.style.top = Math.random() * 100 + 'vh';
-        particle.style.animation = `float ${Math.random() * 10 + 15}s linear infinite`;
-        particle.style.opacity = Math.random() * 0.5 + 0.2;
-        particle.style.pointerEvents = 'none';
-        particle.style.zIndex = '-1';
-
-        body.appendChild(particle);
-    }
-
-    // Add float animation keyframes dynamically
-    if (!document.getElementById('particle-styles')) {
-        const styleSheet = document.createElement("style");
-        styleSheet.id = 'particle-styles';
-        styleSheet.innerText = `
-            @keyframes float {
-                0% { transform: translateY(0) translateX(0); opacity: 0; }
-                10% { opacity: 0.8; }
-                90% { opacity: 0.8; }
-                100% { transform: translateY(-110vh) translateX(0); opacity: 0; }
-            }
+    // 1. Particle System (Golden Dust)
+    const container = document.body;
+    const createParticle = () => {
+        const p = document.createElement('div');
+        const size = Math.random() * 3 + 1;
+        p.style.cssText = `
+            position: fixed;
+            width: ${size}px;
+            height: ${size}px;
+            background: rgba(212, 175, 55, ${Math.random() * 0.4 + 0.1});
+            border-radius: 50%;
+            top: ${Math.random() * 100}vh;
+            left: ${Math.random() * 100}vw;
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(1px);
         `;
-        document.head.appendChild(styleSheet);
-    }
+        container.appendChild(p);
+
+        const duration = Math.random() * 20000 + 10000;
+        const animation = p.animate([
+            { transform: 'translate(0, 0) scale(1)', opacity: 0 },
+            { opacity: 1, offset: 0.1 },
+            { transform: `translate(${Math.random() * 100 - 50}px, -100px) scale(1.5)`, opacity: 0.8, offset: 0.9 },
+            { transform: `translate(${Math.random() * 100 - 50}px, -200px) scale(0)`, opacity: 0 }
+        ], {
+            duration: duration,
+            iterations: Infinity
+        });
+    };
+
+    for (let i = 0; i < 40; i++) createParticle();
+
+    // 2. Scroll Reveal Observer
+    const revealElements = document.querySelectorAll('.reveal');
+    const scrollHandler = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    };
+
+    // The container is the one scrolling, not the body
+    const portal = document.getElementById('app-portal');
+    const observer = new IntersectionObserver(scrollHandler, {
+        root: portal,
+        threshold: 0.15
+    });
+
+    revealElements.forEach(el => observer.observe(el));
+
+    // 3. 3D Tilt Effect for Cards
+    const cards = document.querySelectorAll('.premium-card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.02)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)`;
+        });
+    });
+
+    // 4. Parallax Orbs based on Mouse movement
+    window.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 40;
+        const y = (e.clientY / window.innerHeight - 0.5) * 40;
+
+        document.querySelector('.orb-1').style.transform = `translate(${x}px, ${y}px)`;
+        document.querySelector('.orb-2').style.transform = `translate(${-x}px, ${-y}px)`;
+    });
 });

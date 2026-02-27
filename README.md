@@ -1,5 +1,6 @@
-<<<<<<< HEAD
-# Tech Nexus 
+<div align="center">
+<h1>Tech Nexus</h1>
+</div>
 
 <div align="center">
   <img src="logo.png" alt="Tech Nexus Logo" width="200"/>
@@ -14,8 +15,7 @@
 </div>
 
 ---
-
-## About the Project
+## About the Team
 
 **Tech Nexus** is a dynamic team of passionate innovators dedicated to building the future through technology. From developing cutting-edge apps and websites to exploring AI and robotics, we connect creativity with code to turn ideas into impactful digital solutions.
 

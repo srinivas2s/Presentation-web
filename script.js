@@ -1,58 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Particle System (Golden Dust)
-    const container = document.body;
-    const createParticle = () => {
-        const p = document.createElement('div');
-        const size = Math.random() * 3 + 1;
-        p.style.cssText = `
-            position: fixed;
-            width: ${size}px;
-            height: ${size}px;
-            background: rgba(212, 175, 55, ${Math.random() * 0.4 + 0.1});
-            border-radius: 50%;
-            top: ${Math.random() * 100}vh;
-            left: ${Math.random() * 100}vw;
-            pointer-events: none;
-            z-index: -1;
-            filter: blur(1px);
-        `;
-        container.appendChild(p);
+    // Add particle effect to background
+    const body = document.body;
+    const numberOfParticles = 60;
+    const container = document.querySelector('.container');
 
-        const duration = Math.random() * 20000 + 10000;
-        const animation = p.animate([
-            { transform: 'translate(0, 0) scale(1)', opacity: 0 },
-            { opacity: 1, offset: 0.1 },
-            { transform: `translate(${Math.random() * 100 - 50}px, -100px) scale(1.5)`, opacity: 0.8, offset: 0.9 },
-            { transform: `translate(${Math.random() * 100 - 50}px, -200px) scale(0)`, opacity: 0 }
-        ], {
-            duration: duration,
-            iterations: Infinity
-        });
-    };
+    for (let i = 0; i < numberOfParticles; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'gold-particle';
+        particle.style.position = 'absolute';
+        particle.style.width = Math.random() * 3 + 'px';
+        particle.style.height = particle.style.width;
 
-    for (let i = 0; i < 40; i++) createParticle();
+        const colors = ['rgba(212, 175, 55, 0.4)', 'rgba(255, 215, 0, 0.3)', 'rgba(153, 101, 21, 0.2)'];
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
 
-    // 2. Scroll Reveal Observer
-    const revealElements = document.querySelectorAll('.reveal');
-    const scrollHandler = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
-        });
-    };
+        particle.style.borderRadius = '50%';
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.top = Math.random() * 100 + 'vh';
+        particle.style.animation = `float ${Math.random() * 15 + 20}s linear infinite`;
+        particle.style.opacity = Math.random() * 0.5 + 0.1;
+        particle.style.pointerEvents = 'none';
+        particle.style.zIndex = '-1';
 
-    // The container is the one scrolling, not the body
-    const portal = document.getElementById('app-portal');
-    const observer = new IntersectionObserver(scrollHandler, {
-        root: portal,
-        threshold: 0.15
-    });
+        body.appendChild(particle);
+    }
 
-    revealElements.forEach(el => observer.observe(el));
+    // 3D Tilt Effect for Cards
+    const cards = document.querySelectorAll('.feature-card, .team-card, .list-item');
 
-    // 3. 3D Tilt Effect for Cards
-    const cards = document.querySelectorAll('.premium-card');
     cards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
@@ -65,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const rotateX = (y - centerY) / 10;
             const rotateY = (centerX - x) / 10;
 
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.02)`;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
         });
 
         card.addEventListener('mouseleave', () => {
@@ -73,12 +48,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Parallax Orbs based on Mouse movement
-    window.addEventListener('mousemove', (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 40;
-        const y = (e.clientY / window.innerHeight - 0.5) * 40;
+    // Enhanced Scroll Reveal
+    const revealOptions = {
+        threshold: 0.1,
+        root: container
+    };
 
-        document.querySelector('.orb-1').style.transform = `translate(${x}px, ${y}px)`;
-        document.querySelector('.orb-2').style.transform = `translate(${-x}px, ${-y}px)`;
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0) rotateX(0)';
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, revealOptions);
+
+    const revealItems = document.querySelectorAll('section, .cta-container');
+    revealItems.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(30px) rotateX(-10deg)';
+        item.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+        revealObserver.observe(item);
     });
+
+    // Dynamic particle styles
+    if (!document.getElementById('particle-styles')) {
+        const styleSheet = document.createElement("style");
+        styleSheet.id = 'particle-styles';
+        styleSheet.innerText = `
+            @keyframes float {
+                0% { transform: translateY(0) rotate(0deg); }
+                100% { transform: translateY(-100vh) rotate(360deg); }
+            }
+            .gold-particle {
+                box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    }
 });
